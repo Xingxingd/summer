@@ -56,7 +56,7 @@ onMounted(() => {
 
 <template>
   <div class="root" ref="root">
-    <div class="hello-world">Hello 钟老师!</div>
+    <div class="hello-world">Hello World!</div>
     <MapleLeaf
       v-for="leaf in leaves"
       :key="leaf.pos.x + '-' + leaf.pos.y"
