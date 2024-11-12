@@ -12,8 +12,8 @@
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     p-id="4327"
-    :width="props.size"
-    :height="props.size"
+    :width="200"
+    :height="200"
   >
     <path
       d="M785.513828 821.286754c-70.055313-56.640466-131.167394-144.582242-131.167394-144.582242l-10.43377 8.943232c19.377001 26.829694 78.998544 102.847162 126.695779 141.601164 49.187773 38.754003 96.885007 73.03639 111.790393 84.960699 14.905386 13.414847 8.943231 20.86754 4.471615 29.810771-7.452693 17.886463 14.905386 26.829694 22.358079 5.962155 1.490539-4.471616 2.981077-10.43377 2.981077-17.886463-2.981077-28.320233-56.640466-52.16885-126.695779-108.809316z"
@@ -32,7 +32,7 @@
 import { computed, onMounted, ref } from 'vue'
 import type { Pos } from '@/types/leaves'
 
-const props = defineProps<{ color: string; pos: Pos; size: number; fallSpeed: number }>()
+const props = defineProps<{ color: string; pos: Pos; depth: number; fallSpeed: number }>()
 const svg = ref<SVGSVGElement>()
 const _color = computed(() => {
   return props.color
@@ -53,7 +53,7 @@ onMounted(() => {
     if (newTop > window.innerHeight) {
       svg.value!.style.top = '0px'
       // 随机生成新的水平位置
-      const randomX = Math.random() * (window.innerWidth - props.size)
+      const randomX = Math.random() * (window.innerWidth - 200)
       svg.value!.style.left = `${randomX}px`
       svg.value!.style.top = '0px'
     } else {
@@ -63,9 +63,7 @@ onMounted(() => {
     const rotateX = swayAngleX // 绕X轴旋转
     const rotateY = swayAngleY // 绕Y轴旋转
     const rotateZ = swayAngleZ // 原有的Z轴旋转
-    // 开启透视效果
-    svg.value!.style.perspective = '1000px'
-    svg.value!.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`
+    svg.value!.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translateZ(${props.depth}px) scale(${-props.depth / 1000})`
     requestAnimationFrame(() => randomRotation(swayAngleX, swayAngleY, swayAngleZ))
   }
   randomRotation(Math.random() * 100, Math.random() * 100, Math.random() * 100)
